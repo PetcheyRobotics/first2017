@@ -1,80 +1,129 @@
 package org.usfirst.frc.team5781.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Timer;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
+/*
+ * Simplest program to drive a robot with mecanum drive using a single Logitech
+ * Extreme 3D Pro joystick and 4 drive motors connected as follows:
+ *   - Digital Sidecar 1:
+ *     - PWM 1 - Connected to front left drive motor
+ *     - PWM 2 - Connected to rear left drive motor
+ *     - PWM 3 - Connected to front right drive motor
+ *     - PWM 4 - Connected to rear right drive motor
  */
+
 public class Robot extends IterativeRobot {
-	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
-	String autoSelected;
-	SendableChooser<String> chooser = new SendableChooser<>();
+	// Create a robot drive object using PWMs 1, 2, 3 and 4
+	RobotDrive m_robotDrive = new RobotDrive(1, 2, 3, 4);
 
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
-	@Override
-	public void robotInit() {
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
-		SmartDashboard.putData("Auto choices", chooser);
+	// Define joystick being used at USB port 1 on the Driver Station
+	Joystick m_driveStick = new Joystick(1);
+
+	// Create a special gyro controller object
+	ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
+
+	// Keeps track of time state was entered
+	Timer m_autonStateTimer;
+
+	// List of possible states
+	enum AutonState {
+		AUTON_STATE_FORWARD, AUTON_STATE_BACKWARD, AUTON_STATE_LEFT, AUTON_STATE_RIGHT, AUTON_STATE_FORWARD_LEFT, AUTON_STATE_BACKWARD_RIGHT, AUTON_STATE_FORWARD_RIGHT, AUTON_STATE_BACKWARD_LEFT, AUTON_STATE_CLOCKWISE, AUTON_STATE_ANTI_CLOCKWISE, AUTON_STATE_FORWARD_CLOCKWISE, AUTON_STATE_BACKWARD_ANTI_CLOCKWISE, AUTON_STATE_END
 	}
 
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString line to get the auto name from the text box below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional comparisons to the
-	 * switch structure below with additional strings. If using the
-	 * SendableChooser make sure to add them to the chooser code above as well.
-	 */
-	@Override
+	AutonState m_autonState;
+
+	void changeAutonState(AutonState newState) {
+		if (newState != m_autonState) {
+			m_autonState = newState;
+			m_autonStateTimer.reset();
+		}
+	}
+
 	public void autonomousInit() {
-		autoSelected = chooser.getSelected();
-		// autoSelected = SmartDashboard.getString("Auto Selector",
-		// defaultAuto);
-		System.out.println("Auto selected: " + autoSelected);
+		m_autonState = AutonState.AUTON_STATE_FORWARD;
+		m_autonStateTimer = new Timer();
+		m_autonStateTimer.start();
+
 	}
 
-	/**
-	 * This function is called periodically during autonomous
-	 */
-	@Override
+	void doOperation(double x, double y, double z, AutonState nextState) {
+		doOperation(x, y, z, nextState, 0);
+	}
+
+	void doOperation(double x, double y, double z, AutonState nextState, double gyroAngle) {
+		double adj=0.5;
+		m_robotDrive.mecanumDrive_Cartesian(x*adj, y*adj, z*adj, gyroAngle);
+		if (m_autonStateTimer.hasPeriodPassed(2.0)) {
+			changeAutonState(nextState);
+		}
+	}
+
 	public void autonomousPeriodic() {
-		switch (autoSelected) {
-		case customAuto:
-			// Put custom auto code here
+		switch (m_autonState) {
+		case AUTON_STATE_FORWARD: {
+			doOperation(0, -1, 0, AutonState.AUTON_STATE_BACKWARD);
 			break;
-		case defaultAuto:
-		default:
-			// Put default auto code here
+		}
+		case AUTON_STATE_BACKWARD: {
+			doOperation(0, 1, 0, AutonState.AUTON_STATE_LEFT);
+			break;
+		}
+		case AUTON_STATE_LEFT: {
+			doOperation(-1, 0, 0, AutonState.AUTON_STATE_RIGHT);
+			break;
+		}
+		case AUTON_STATE_RIGHT: {
+			doOperation(1, 0, 0, AutonState.AUTON_STATE_FORWARD_LEFT);
+			break;
+		}
+		case AUTON_STATE_FORWARD_LEFT: {
+			doOperation(-1, -1, 0, AutonState.AUTON_STATE_BACKWARD_RIGHT);
+			break;
+		}
+		case AUTON_STATE_BACKWARD_RIGHT: {
+			doOperation(1, 1, 0, AutonState.AUTON_STATE_FORWARD_RIGHT);
+			break;
+		}
+		case AUTON_STATE_FORWARD_RIGHT: {
+			doOperation(1, -1, 0, AutonState.AUTON_STATE_BACKWARD_LEFT);
+			break;
+		}
+		case AUTON_STATE_BACKWARD_LEFT: {
+			doOperation(-1, 1, 0, AutonState.AUTON_STATE_CLOCKWISE);
+			break;
+		}
+		case AUTON_STATE_CLOCKWISE: {
+			doOperation(0, 0, 1, AutonState.AUTON_STATE_ANTI_CLOCKWISE);
+			break;
+		}
+		case AUTON_STATE_ANTI_CLOCKWISE: {
+			doOperation(0, 0, -1, AutonState.AUTON_STATE_FORWARD_CLOCKWISE);
+			break;
+		}
+		case AUTON_STATE_FORWARD_CLOCKWISE: {
+			doOperation(0, -1, 1, AutonState.AUTON_STATE_BACKWARD_ANTI_CLOCKWISE, m_gyro.getAngle());
+			break;
+		}
+		case AUTON_STATE_BACKWARD_ANTI_CLOCKWISE: {
+			doOperation(0, 1, -1, AutonState.AUTON_STATE_END, m_gyro.getAngle());
+			break;
+		}
+		case AUTON_STATE_END:
 			break;
 		}
 	}
 
-	/**
-	 * This function is called periodically during operator control
-	 */
-	@Override
-	public void teleopPeriodic() {
+	public void robotInit() {
+		// Set the gyro controller to zero on init.
+		m_gyro.reset();
 	}
 
-	/**
-	 * This function is called periodically during test mode
-	 */
-	@Override
-	public void testPeriodic() {
+	public void teleopPeriodic() {
+		m_robotDrive.mecanumDrive_Cartesian(m_driveStick.getX(), m_driveStick.getY(), m_driveStick.getTwist(),
+				m_gyro.getAngle());
 	}
 }
-
