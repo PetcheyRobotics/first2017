@@ -21,7 +21,7 @@ public class Robot extends IterativeRobot {
 	RobotDrive m_robotDrive = new RobotDrive(1, 2, 3, 4);
 
 	// Define joystick being used at USB port 1 on the Driver Station
-	Joystick m_driveStick = new Joystick(1);
+	Joystick m_driveStick = new Joystick(0);
 
 	// Create a special gyro controller object
 	ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
