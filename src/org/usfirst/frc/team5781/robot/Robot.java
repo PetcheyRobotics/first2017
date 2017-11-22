@@ -124,11 +124,11 @@ public class Robot extends IterativeRobot {
 
 	public void teleopPeriodic() {
 		double x = m_driveStick.getX();
-		x = x * abs(x);
+		x = x * Math.abs(x);
 		double y = m_driveStick.getY();
-		y = y * abs(y);
+		y = y * Math.abs(y);
 		
-		m_robotDrive.mecanumDrive_Cartesian(x, y, m_driveStick.getTwist(),
-				m_gyro.getAngle());
+		m_robotDrive.mecanumDrive_Cartesian(x, m_driveStick.getTwist(), y, 0);
+				//m_gyro.getAngle());
 	}
 }
