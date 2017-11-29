@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 /*
  * Simplest program to drive a robot with mecanum drive using a single Logitech
@@ -21,7 +22,7 @@ public class Robot extends IterativeRobot {
 	RobotDrive m_robotDrive = new RobotDrive(1, 2, 3, 4);
 
 	// Define joystick being used at USB port 1 on the Driver Station
-	Joystick m_driveStick = new Joystick(1);
+	Joystick m_driveStick = new Joystick(0);
 
 	// Create a special gyro controller object
 	ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
@@ -29,7 +30,7 @@ public class Robot extends IterativeRobot {
 	// Keeps track of time state was entered
 	Timer m_autonStateTimer;
 
-	DoubleSolenoid m_dsol = DoubleSolenoid(0,1);
+	DoubleSolenoid m_dsol = new DoubleSolenoid(0,1);
 	
 	// List of possible states
 	enum AutonState {
@@ -139,13 +140,14 @@ public class Robot extends IterativeRobot {
 		
 		x = 0.9*x + (0.1 * sign); 
 		x = x * Math.abs(x);
-		returtn x;
+		return x;
 	}
 
 	public void teleopPeriodic() {
 		double x = dumpInput( m_driveStick.getX() );
 		double y = dumpInput( m_driveStick.getY() );
-		double z = dumpInput( m_driveStick.getTwist() );
+		// The z axis is inverted
+		double z = -dumpInput( m_driveStick.getTwist() );
 		
 		m_robotDrive.mecanumDrive_Cartesian(x, z, y, 0);
 				//m_gyro.getAngle());
