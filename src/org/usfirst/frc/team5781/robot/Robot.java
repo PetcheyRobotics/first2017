@@ -29,6 +29,8 @@ public class Robot extends IterativeRobot {
 	// Keeps track of time state was entered
 	Timer m_autonStateTimer;
 
+	DoubleSolenoid m_dsol = DoubleSolenoid(0,1);
+	
 	// List of possible states
 	enum AutonState {
 		AUTON_STATE_FORWARD, AUTON_STATE_BACKWARD, AUTON_STATE_LEFT, AUTON_STATE_RIGHT, AUTON_STATE_FORWARD_LEFT, AUTON_STATE_BACKWARD_RIGHT, AUTON_STATE_FORWARD_RIGHT, AUTON_STATE_BACKWARD_LEFT, AUTON_STATE_CLOCKWISE, AUTON_STATE_ANTI_CLOCKWISE, AUTON_STATE_FORWARD_CLOCKWISE, AUTON_STATE_BACKWARD_ANTI_CLOCKWISE, AUTON_STATE_END
@@ -121,14 +123,31 @@ public class Robot extends IterativeRobot {
 		// Set the gyro controller to zero on init.
 		m_gyro.reset();
 	}
+	
+	public double dumpInput(double x) {
+		if( x < 0.1 && x > -0.1 ) {
+			return 0;
+		}
+		
+		int sign;
+		if( x < 0 ) {
+			sign = -1;
+		}
+		else {
+			sign =1;
+		}
+		
+		x = 0.9*x + (0.1 * sign); 
+		x = x * Math.abs(x);
+		returtn x;
+	}
 
 	public void teleopPeriodic() {
-		double x = m_driveStick.getX();
-		x = x * Math.abs(x);
-		double y = m_driveStick.getY();
-		y = y * Math.abs(y);
+		double x = dumpInput( m_driveStick.getX() );
+		double y = dumpInput( m_driveStick.getY() );
+		double z = dumpInput( m_driveStick.getTwist() );
 		
-		m_robotDrive.mecanumDrive_Cartesian(x, m_driveStick.getTwist(), y, 0);
+		m_robotDrive.mecanumDrive_Cartesian(x, z, y, 0);
 				//m_gyro.getAngle());
 	}
 }
