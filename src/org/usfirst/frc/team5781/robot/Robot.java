@@ -146,6 +146,7 @@ public class Robot extends IterativeRobot {
 		double x = dumpInput( m_driveStick.getX() );
 		double y = dumpInput( m_driveStick.getY() );
 		double z = dumpInput( m_driveStick.getTwist() );
+		boolean triggerPressed = m_driveStick.getTrigger();
 		if(m_driveStick.getTrigger()){
 			m_dsol.set(DoubleSolenoid.Forward);
 		}else{
