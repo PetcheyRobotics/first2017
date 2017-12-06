@@ -146,7 +146,11 @@ public class Robot extends IterativeRobot {
 		double x = dumpInput( m_driveStick.getX() );
 		double y = dumpInput( m_driveStick.getY() );
 		double z = dumpInput( m_driveStick.getTwist() );
-		
+		if(m_driveStick.getTrigger()){
+			m_dsol.set(DoubleSolenoid.Forward);
+		}else{
+			m_dsol.set(DoubleSolenoid.Reverse);
+		}
 		m_robotDrive.mecanumDrive_Cartesian(x, z, y, 0);
 				//m_gyro.getAngle());
 	}
