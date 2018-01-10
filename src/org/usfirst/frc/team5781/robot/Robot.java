@@ -1,7 +1,10 @@
 package org.usfirst.frc.team5781.robot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.IterativeRobot;import edu.wpi.first.wpilibj.ADXRS450_Gyro;import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;import edu.wpi.first.wpilibj.SpeedControllerGroup;import edu.wpi.first.wpilibj.Spark; 
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;import edu.wpi.first.wpilibj.Spark; 
 /* * Simplest program to drive a robot with mecanum drive using a single Logitech * Extreme 3D Pro joystick and 4 drive motors connected as follows: *   - Digital Sidecar 1: *     - PWM 1 - Connected to front left drive motor *     - PWM 2 - Connected to rear left drive motor *     - PWM 3 - Connected to front right drive motor *     - PWM 4 - Connected to rear right drive motor */
 public class Robot extends IterativeRobot {
  Spark m_frontLeft = new Spark(1); Spark m_rearLeft = new Spark(2); SpeedControllerGroup m_left = new SpeedControllerGroup(m_frontLeft, m_rearLeft);
