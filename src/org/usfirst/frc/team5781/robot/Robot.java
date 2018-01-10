@@ -20,4 +20,4 @@ public class Robot extends IterativeRobot {
   double leftSpeed = 0;  double rightSpeed = 0;    if(z != 0) {   leftSpeed = -z;   rightSpeed = z;  }  else if(y != 0) {   if( y < 0 ) rightSpeed = -y;   else leftSpeed = y;  }  else if(x != 0) {   leftSpeed = x;   rightSpeed = x;      }
   m_drive.( leftSpeed, rightSpeed ); }
     public void joystickButtons() {  boolean triggerPressed = m_driveStick.getTrigger();  if(m_driveStick.getTrigger()){   m_dsol.set(DoubleSolenoid.Forward);  }else{   m_dsol.set(DoubleSolenoid.Reverse);  } }  
-
+}
