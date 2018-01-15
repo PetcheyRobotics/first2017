@@ -43,10 +43,9 @@ public class Robot extends IterativeRobot {
 	// Keeps track of time state was entered
 	Timer m_autonStateTimer;
 
-	DoubleSolenoid m_dsol = DoubleSolenoid(0,1);
+	DoubleSolenoid m_dsol = new DoubleSolenoid(0, 1);
 
 	public void autonomousInit() {
-		m_autonState = AutonState.AUTON_STATE_FORWARD;
 		m_autonStateTimer = new Timer();
 		m_autonStateTimer.start();
 
@@ -109,9 +108,9 @@ public class Robot extends IterativeRobot {
 	public void joystickButtons() {
 		boolean triggerPressed = m_driveStick.getTrigger();
 		if(m_driveStick.getTrigger()){
-			m_dsol.set(DoubleSolenoid.Forward);
+			m_dsol.set(DoubleSolenoid.Value.kForward);
 		}else{
-			m_dsol.set(DoubleSolenoid.Reverse);
+			m_dsol.set(DoubleSolenoid.Value.kReverse);
 		}
 	}		
 
