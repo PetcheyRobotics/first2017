@@ -98,15 +98,11 @@ public class Robot extends IterativeRobot {
 			rightSpeed = z;
 		}
 		else if(y != 0) {
-			if( y < 0 ) rightSpeed = -y;
-			else leftSpeed = y;
-		}
-		else if(x != 0) {
-			leftSpeed = x;
-			rightSpeed = x;				
+			leftSpeed = y;
+			rightSpeed = y;				
 		}
 
-		m_drive.( leftSpeed, rightSpeed );
+		m_drive.tankDrive( leftSpeed, rightSpeed );
 	}
 
 			
