@@ -14,9 +14,8 @@ https://www.bing.com/images/search?view=detailV2&ccid=%2bSEMVO6b&id=0CA173EA478E
 Actions
 
 Grab:
--Close claw with trigger
--Open claw with another button
--Extra solenoid to push block out. So we need to asign another button
+-Hold down trigger to extend piston and release to retract
+-Double solenoid pushes the bumper out
 
 Limit switches:
 -If arm goes so low to hit the button, don't do anything
