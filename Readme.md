@@ -25,3 +25,6 @@ Up and down(arm):
 -Throttle deadzone
 -Reducing sensitivity
 -Range of values for up and down
+
+Creating Subsystems
+https://wpilib.screenstepslive.com/s/currentCS/m/java/l/599735-simple-subsystems
