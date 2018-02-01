@@ -1,9 +1,7 @@
 package org.usfirst.frc.team5781.robot.commands;
 
 import org.usfirst.frc.team5781.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
-
 /**
  *
  */
@@ -12,7 +10,7 @@ public class ArmCommand extends Command {
     public ArmCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.ArmSubsystem);
+    	requires(Robot.ArmSub);
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +19,8 @@ public class ArmCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.ArmSubsystem.move(Robot.oi.Arm.getZ());
+    	//TODO Actually move the arm
+    	//Robot.ArmSub.move(Robot.oi.Arm.getZ());
     }
 
     // Make this return true when this Command no longer needs to run execute()
