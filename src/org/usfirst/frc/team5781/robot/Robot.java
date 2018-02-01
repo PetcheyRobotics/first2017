@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc.team5781.robot.subsystems.ArmSubsystem;
 import org.usfirst.frc.team5781.robot.subsystems.DriveTrainSubsystem;
 
 /**
@@ -27,6 +29,8 @@ import org.usfirst.frc.team5781.robot.subsystems.DriveTrainSubsystem;
 public class Robot extends IterativeRobot {
 	public static final DriveTrainSubsystem DriveTrainSub
 			= new DriveTrainSubsystem();
+	public static final ArmSubsystem ArmSub
+		= new ArmSubsystem();
 	public static OI oi;
 
 	Command m_autonomousCommand;
@@ -63,6 +67,7 @@ public class Robot extends IterativeRobot {
 	 * between different autonomous modes using the dashboard. The sendable
 	 * chooser code works with the Java SmartDashboard. If you prefer the
 	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
+	
 	 * getString code to get the auto name from the text box below the Gyro
 	 *
 	 * <p>You can add additional auto modes by adding additional commands to the
