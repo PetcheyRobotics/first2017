@@ -1,158 +1,122 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
 package org.usfirst.frc.team5781.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.Timer;
 
-/*
- * Simplest program to drive a robot with mecanum drive using a single Logitech
- * Extreme 3D Pro joystick and 4 drive motors connected as follows:
- *   - Digital Sidecar 1:
- *     - PWM 1 - Connected to front left drive motor
- *     - PWM 2 - Connected to rear left drive motor
- *     - PWM 3 - Connected to front right drive motor
- *     - PWM 4 - Connected to rear right drive motor
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team5781.robot.subsystems.DriveTrainSubsystem;
+
+/**
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to each mode, as described in the TimedRobot
+ * documentation. If you change the name of this class or the package after
+ * creating this project, you must also update the build.properties file in the
+ * project.
  */
 
+
 public class Robot extends IterativeRobot {
-	// Create a robot drive object using PWMs 1, 2, 3 and 4
-	RobotDrive m_robotDrive = new RobotDrive(1, 2, 3, 4);
+	public static final DriveTrainSubsystem DriveTrainSub
+			= new DriveTrainSubsystem();
+	public static OI oi;
 
-	// Define joystick being used at USB port 1 on the Driver Station
-	Joystick m_driveStick = new Joystick(1);
+	Command m_autonomousCommand;
+	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-	// Create a special gyro controller object
-	ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
-
-	// Keeps track of time state was entered
-	Timer m_autonStateTimer;
-
-	DoubleSolenoid m_dsol = DoubleSolenoid(0,1);
-	
-	// List of possible states
-	enum AutonState {
-		AUTON_STATE_FORWARD, AUTON_STATE_BACKWARD, AUTON_STATE_LEFT, AUTON_STATE_RIGHT, AUTON_STATE_FORWARD_LEFT, AUTON_STATE_BACKWARD_RIGHT, AUTON_STATE_FORWARD_RIGHT, AUTON_STATE_BACKWARD_LEFT, AUTON_STATE_CLOCKWISE, AUTON_STATE_ANTI_CLOCKWISE, AUTON_STATE_FORWARD_CLOCKWISE, AUTON_STATE_BACKWARD_ANTI_CLOCKWISE, AUTON_STATE_END
-	}
-
-	AutonState m_autonState;
-
-	void changeAutonState(AutonState newState) {
-		if (newState != m_autonState) {
-			m_autonState = newState;
-			m_autonStateTimer.reset();
-		}
-	}
-
-	public void autonomousInit() {
-		m_autonState = AutonState.AUTON_STATE_FORWARD;
-		m_autonStateTimer = new Timer();
-		m_autonStateTimer.start();
-
-	}
-
-	void doOperation(double x, double y, double z, AutonState nextState) {
-		doOperation(x, y, z, nextState, 0);
-	}
-
-	void doOperation(double x, double y, double z, AutonState nextState, double gyroAngle) {
-		double adj=0.5;
-		m_robotDrive.mecanumDrive_Cartesian(x*adj, y*adj, z*adj, gyroAngle);
-		if (m_autonStateTimer.hasPeriodPassed(2.0)) {
-			changeAutonState(nextState);
-		}
-	}
-
-	public void autonomousPeriodic() {
-		switch (m_autonState) {
-		case AUTON_STATE_FORWARD: {
-			doOperation(0, -1, 0, AutonState.AUTON_STATE_BACKWARD);
-			break;
-		}
-		case AUTON_STATE_BACKWARD: {
-			doOperation(0, 1, 0, AutonState.AUTON_STATE_LEFT);
-			break;
-		}
-		case AUTON_STATE_LEFT: {
-			doOperation(-1, 0, 0, AutonState.AUTON_STATE_RIGHT);
-			break;
-		}
-		case AUTON_STATE_RIGHT: {
-			doOperation(1, 0, 0, AutonState.AUTON_STATE_FORWARD_LEFT);
-			break;
-		}
-		case AUTON_STATE_FORWARD_LEFT: {
-			doOperation(-1, -1, 0, AutonState.AUTON_STATE_BACKWARD_RIGHT);
-			break;
-		}
-		case AUTON_STATE_BACKWARD_RIGHT: {
-			doOperation(1, 1, 0, AutonState.AUTON_STATE_FORWARD_RIGHT);
-			break;
-		}
-		case AUTON_STATE_FORWARD_RIGHT: {
-			doOperation(1, -1, 0, AutonState.AUTON_STATE_BACKWARD_LEFT);
-			break;
-		}
-		case AUTON_STATE_BACKWARD_LEFT: {
-			doOperation(-1, 1, 0, AutonState.AUTON_STATE_CLOCKWISE);
-			break;
-		}
-		case AUTON_STATE_CLOCKWISE: {
-			doOperation(0, 0, 1, AutonState.AUTON_STATE_ANTI_CLOCKWISE);
-			break;
-		}
-		case AUTON_STATE_ANTI_CLOCKWISE: {
-			doOperation(0, 0, -1, AutonState.AUTON_STATE_FORWARD_CLOCKWISE);
-			break;
-		}
-		case AUTON_STATE_FORWARD_CLOCKWISE: {
-			doOperation(0, -1, 1, AutonState.AUTON_STATE_BACKWARD_ANTI_CLOCKWISE, m_gyro.getAngle());
-			break;
-		}
-		case AUTON_STATE_BACKWARD_ANTI_CLOCKWISE: {
-			doOperation(0, 1, -1, AutonState.AUTON_STATE_END, m_gyro.getAngle());
-			break;
-		}
-		case AUTON_STATE_END:
-			break;
-		}
-	}
-
+	/**
+	 * This function is run when the robot is first started up and should be
+	 * used for any initialization code.
+	 */
+	@Override
 	public void robotInit() {
-		// Set the gyro controller to zero on init.
-		m_gyro.reset();
-	}
-	
-	public double dumpInput(double x) {
-		if( x < 0.1 && x > -0.1 ) {
-			return 0;
-		}
-		
-		int sign;
-		if( x < 0 ) {
-			sign = -1;
-		}
-		else {
-			sign =1;
-		}
-		
-		x = 0.9*x + (0.1 * sign); 
-		x = x * Math.abs(x);
-		returtn x;
+		oi = new OI();
+		// chooser.addObject("My Auto", new MyAutoCommand());
+		SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
-	public void teleopPeriodic() {
-		double x = dumpInput( m_driveStick.getX() );
-		double y = dumpInput( m_driveStick.getY() );
-		double z = dumpInput( m_driveStick.getTwist() );
-		boolean triggerPressed = m_driveStick.getTrigger();
-		if(m_driveStick.getTrigger()){
-			m_dsol.set(DoubleSolenoid.Forward);
-		}else{
-			m_dsol.set(DoubleSolenoid.Reverse);
+	/**
+	 * This function is called once each time the robot enters Disabled mode.
+	 * You can use it to reset any subsystem information you want to clear when
+	 * the robot is disabled.
+	 */
+	@Override
+	public void disabledInit() {
+
+	}
+
+	@Override
+	public void disabledPeriodic() {
+		Scheduler.getInstance().run();
+	}
+
+	/**
+	 * This autonomous (along with the chooser code above) shows how to select
+	 * between different autonomous modes using the dashboard. The sendable
+	 * chooser code works with the Java SmartDashboard. If you prefer the
+	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
+	 * getString code to get the auto name from the text box below the Gyro
+	 *
+	 * <p>You can add additional auto modes by adding additional commands to the
+	 * chooser code above (like the commented example) or additional comparisons
+	 * to the switch structure below with additional strings & commands.
+	 */
+	@Override
+	public void autonomousInit() {
+		m_autonomousCommand = m_chooser.getSelected();
+
+		/*
+		 * String autoSelected = SmartDashboard.getString("Auto Selector",
+		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
+		 * = new MyAutoCommand(); break; case "Default Auto": default:
+		 * autonomousCommand = new ExampleCommand(); break; }
+		 */
+
+		// schedule the autonomous command (example)
+		if (m_autonomousCommand != null) {
+			m_autonomousCommand.start();
 		}
-		m_robotDrive.mecanumDrive_Cartesian(x, z, y, 0);
-				//m_gyro.getAngle());
+	}
+
+	/**
+	 * This function is called periodically during autonomous.
+	 */
+	@Override
+	public void autonomousPeriodic() {
+		Scheduler.getInstance().run();
+	}
+
+	@Override
+	public void teleopInit() {
+		// This makes sure that the autonomous stops running when
+		// teleop starts running. If you want the autonomous to
+		// continue until interrupted by another command, remove
+		// this line or comment it out.
+		if (m_autonomousCommand != null) {
+			m_autonomousCommand.cancel();
+		}
+	}
+
+	/**
+	 * This function is called periodically during operator control.
+	 */
+	@Override
+	public void teleopPeriodic() {
+		Scheduler.getInstance().run();
+	}
+
+	/**
+	 * This function is called periodically during test mode.
+	 */
+	@Override
+	public void testPeriodic() {
 	}
 }

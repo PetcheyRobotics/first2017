@@ -28,7 +28,7 @@ public class DriveTrainCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.DriveTrainSub.drive(Robot.oi.Driver.getX(), Robot.m_oi.Driver.getTwist());
+		Robot.DriveTrainSub.drive(Robot.oi.Driver.getY(), Robot.oi.Driver.getRawAxis(5));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
