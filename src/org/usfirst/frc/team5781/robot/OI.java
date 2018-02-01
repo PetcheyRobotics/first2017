@@ -16,19 +16,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
  * interface to the commands and command groups that allow control of the robot.
  */ 
 public class OI {
-	private RobotDrive m_drive;
-	private Joystick m_joystick;
 	
-	
-	public OI() {
-		Spark frontLeft = new Spark(0);
-		Spark frontRight = new Spark(1);
-		Spark rearLeft = new Spark(2);
-		Spark rearRight = new Spark(3);
-		m_drive = new RobotDrive(frontLeft	, rearLeft, frontRight, rearRight);
-		m_joystick = new Joystick(1);
-		
-		}
 	
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
