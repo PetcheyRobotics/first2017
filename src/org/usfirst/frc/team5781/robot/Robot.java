@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team5781.robot.subsystems.ArmSubsystem;
+import org.usfirst.frc.team5781.robot.subsystems.ClawSubsystem;
 import org.usfirst.frc.team5781.robot.subsystems.DriveTrainSubsystem;
 
 /**
@@ -31,6 +32,8 @@ public class Robot extends IterativeRobot {
 			= new DriveTrainSubsystem();
 	public static final ArmSubsystem ArmSub
 		= new ArmSubsystem();
+	public static final ClawSubsystem ClawSub
+		= new ClawSubsystem();
 	public static OI oi;
 
 	Command m_autonomousCommand;
