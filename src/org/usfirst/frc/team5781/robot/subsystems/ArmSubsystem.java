@@ -37,6 +37,14 @@ public class ArmSubsystem extends Subsystem {
 	public boolean isBot() {
 		return m_lowLimit.get();
 	}
+	
+	public void ArmDownLittle() {
+		mController.setSpeed(0.5);
+	}
+	
+	public void stop() {
+		mController.stopMotor();
+	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
