@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ArmSubsystem extends Subsystem {
 	
 	Talon mController = new Talon(4);
-	
+	final static double SPEED = 0.5;
 	
 	 DigitalInput m_highLimit = new DigitalInput(5);
 	 DigitalInput m_lowLimit = new DigitalInput(6);
@@ -38,10 +38,13 @@ public class ArmSubsystem extends Subsystem {
 		return m_lowLimit.get();
 	}
 	
-	public void ArmDownLittle() {
-		mController.setSpeed(0.5);
+	public void MoveDownLittle() {
+		mController.setSpeed(SPEED);
 	}
 	
+	public void MoveUpLittle() {
+		mController.setSpeed(-SPEED);
+	}
 	public void stop() {
 		mController.stopMotor();
 	}
