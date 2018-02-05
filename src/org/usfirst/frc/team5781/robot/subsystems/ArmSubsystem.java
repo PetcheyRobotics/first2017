@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5781.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -10,12 +11,31 @@ public class ArmSubsystem extends Subsystem {
 	
 	Talon mController = new Talon(4);
 	
+	
+	 DigitalInput m_highLimit = new DigitalInput(5);
+	 DigitalInput m_lowLimit = new DigitalInput(6);
+	
 	public void moveUp() {
-		mController.setPosition(1);
+		if (!isTop())
+		{
+			mController.setPosition(1);
+		}
 	}
 	
 	public void moveDown() {
-		mController.setPosition(0);
+		if (!isBot())
+		{
+			mController.setPosition(0);
+		}
+	}
+	
+	public boolean isTop() {
+		return m_highLimit.get();
+		
+	}
+	
+	public boolean isBot() {
+		return m_lowLimit.get();
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
