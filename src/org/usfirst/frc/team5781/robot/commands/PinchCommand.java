@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class Pinch extends Command {
+public class PinchCommand extends Command {
 
-    public Pinch() {
+    public PinchCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.ClawSub);
