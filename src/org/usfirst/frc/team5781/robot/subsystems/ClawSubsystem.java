@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ClawSubsystem extends Subsystem {
 	
-	DoubleSolenoid claw = new DoubleSolenoid(1,1);
+	DoubleSolenoid claw = new DoubleSolenoid(0,3);
 	
 	public void openClaw() {
 		claw.set(DoubleSolenoid.Value.kReverse);
