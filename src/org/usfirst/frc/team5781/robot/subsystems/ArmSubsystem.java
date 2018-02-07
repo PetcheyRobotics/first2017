@@ -1,5 +1,8 @@
 package org.usfirst.frc.team5781.robot.subsystems;
 
+import org.usfirst.frc.team5781.robot.Robot;
+import org.usfirst.frc.team5781.robot.commands.ArmCommand;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -15,18 +18,15 @@ public class ArmSubsystem extends Subsystem {
 	 DigitalInput m_highLimit = new DigitalInput(5);
 	 DigitalInput m_lowLimit = new DigitalInput(6);
 	
-	public void moveUp() {
-		if (!isTop())
+	public void move(double x) {
+		if (!isTop() && !isBot())
 		{
-			mController.setPosition(1);
+			mController.set(x);
+		}else {
+			stop();
 		}
-	}
-	
-	public void moveDown() {
-		if (!isBot())
-		{
-			mController.setPosition(0);
-		}
+			
+			
 	}
 	
 	public boolean isTop() {
@@ -53,6 +53,6 @@ public class ArmSubsystem extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new ArmCommand());
     }
 }

@@ -2,18 +2,17 @@ package org.usfirst.frc.team5781.robot.commands;
 
 import org.usfirst.frc.team5781.robot.Robot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class OpenClawAtStart extends Command {
+public class PusherRetractCommand extends Command {
 
-    public OpenClawAtStart() {
+    public PusherRetractCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.ClawSub); 
+    	requires(Robot.PushSub);
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +21,7 @@ public class OpenClawAtStart extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		Robot.ClawSub.openClaw(); 
+    	Robot.PushSub.retract();
     }
 
     // Make this return true when this Command no longer needs to run execute()

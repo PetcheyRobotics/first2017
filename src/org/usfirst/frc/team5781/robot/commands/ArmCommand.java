@@ -20,7 +20,7 @@ public class ArmCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//TODO Actually move the arm
-    	//Robot.ArmSub.move(Robot.oi.Arm.getZ());
+    	Robot.ArmSub.move(Robot.oi.Driver.getZ());
     }
 
     // Make this return true when this Command no longer needs to run execute()

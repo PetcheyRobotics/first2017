@@ -1,6 +1,6 @@
 package org.usfirst.frc.team5781.robot.subsystems;
 
-import org.usfirst.frc.team5781.robot.commands.PusherRetractedAtStart;
+import org.usfirst.frc.team5781.robot.commands.PusherRetractCommand;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -24,7 +24,7 @@ public class PusherSubsystem extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new PusherRetractedAtStart());
+		setDefaultCommand(new PusherRetractCommand());
 		// TODO Auto-generated method stub
 		
 	}

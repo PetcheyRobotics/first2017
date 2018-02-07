@@ -1,6 +1,6 @@
 package org.usfirst.frc.team5781.robot.subsystems;
 
-import org.usfirst.frc.team5781.robot.commands.OpenClawAtStart;
+import org.usfirst.frc.team5781.robot.commands.OpenClawCommand;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -27,7 +27,7 @@ public class ClawSubsystem extends Subsystem {
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
-    	setDefaultCommand(new OpenClawAtStart());
+    	setDefaultCommand(new OpenClawCommand());
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
