@@ -1,13 +1,24 @@
 package org.usfirst.frc.team5781.robot.automation;
 
+import org.usfirst.frc.team5781.robot.commands.DriveStraight;
+import org.usfirst.frc.team5781.robot.commands.MoveArmCommand;
+import org.usfirst.frc.team5781.robot.commands.OpenClawCommand;
+import org.usfirst.frc.team5781.robot.commands.PinchCommand;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
 public class PositionTwo extends CommandGroup {
+	private long mDuration = 1000;
 
     public PositionTwo() {
+    	addSequential(new PinchCommand());
+    	addParallel(new MoveArmCommand(mDuration, 1)); 
+    	addSequential(new DriveStraight(1, mDuration));
+    	addSequential(new OpenClawCommand());
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
