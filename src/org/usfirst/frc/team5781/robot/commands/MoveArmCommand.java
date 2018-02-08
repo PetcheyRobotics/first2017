@@ -5,12 +5,15 @@ import org.usfirst.frc.team5781.robot.Robot;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LiftArmCommand extends Command {
+public class MoveArmCommand extends Command {
 	long m_time;
 	long m_endtime;
-	public LiftArmCommand(long milliseconds) {
+	private final double mAmount;
+	
+	public MoveArmCommand(long milliseconds, double amount) {
 		requires(Robot.ArmSub);
 		m_time = milliseconds;
+		mAmount = amount;
 	}
 	
 	protected void initialize() {
@@ -21,7 +24,7 @@ public class LiftArmCommand extends Command {
  
 	protected void execute() {
 		
-		Robot.ArmSub.move(0.5);
+		Robot.ArmSub.move(mAmount);
 	}
 
 	protected boolean isFinished() {
@@ -31,6 +34,7 @@ public class LiftArmCommand extends Command {
 	protected void end() {
 		Robot.ArmSub.move(0);
 	}
+	
 	protected void interrupted() { 
 		end();
 	}

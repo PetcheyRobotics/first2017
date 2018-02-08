@@ -40,7 +40,6 @@ public class DriveTrainSubsystem extends Subsystem {
 		m_drive.arcadeDrive( x, z, true);
 	
 	}
-		
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
@@ -48,6 +47,6 @@ public class DriveTrainSubsystem extends Subsystem {
 		setDefaultCommand(new DriveTrainCommand());
 		
 		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
+		// setDefaultCommand(new MySpecialCommand());		
 	}
 }
