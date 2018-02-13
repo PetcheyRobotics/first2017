@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5781.robot.subsystems.ArmSubsystem;
 import org.usfirst.frc.team5781.robot.subsystems.ClawSubsystem;
 import org.usfirst.frc.team5781.robot.subsystems.DriveTrainSubsystem;
+import org.usfirst.frc.team5781.robot.subsystems.GyroSubsystem;
 import org.usfirst.frc.team5781.robot.subsystems.PusherSubsystem;
 
 /**
@@ -37,6 +38,8 @@ public class Robot extends IterativeRobot {
 		= new ClawSubsystem();
 	public static final PusherSubsystem PushSub
 		= new PusherSubsystem();
+	public static final GyroSubsystem GyroSub
+	 	= new GyroSubsystem();
 	public static OI oi;
 
 	Command m_autonomousCommand;
