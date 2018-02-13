@@ -21,9 +21,9 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */ public class OI {
 	 
-	 public static final int X_AXIS= 0;
-	 public static final int Y_AXIS= 1;
-	 public static final int Z_TWIST_AXIS= 5;
+	 //public static final int X_AXIS= 0;
+	 //public static final int Y_AXIS= 1;
+	 //public static final int Z_TWIST_AXIS= 5;
 	 public static final int THROTTLE_AXIS= 2;
 	 
 	public Joystick Driver = new Joystick(0);
@@ -42,15 +42,15 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 	
 	public OI() {
 		Driver.setThrottleChannel(THROTTLE_AXIS);
-		Driver.setZChannel(Z_TWIST_AXIS);
-		Driver.setXChannel(X_AXIS);
-		Driver.setYChannel(Y_AXIS);
+		//Driver.setZChannel(Z_TWIST_AXIS);
+		//Driver.setXChannel(X_AXIS);
+		//Driver.setYChannel(Y_AXIS);
+
+		trigger.whenPressed(new PusherPushCommand());
+		trigger.whenReleased(new PusherRetractCommand());
 		
-		trigger.whenPressed(new PinchCommand());
-		l1.whenPressed(new OpenClawCommand());
-		
-		square.whenPressed(new PusherPushCommand());
-		circle.whenPressed(new PusherRetractCommand());
+		square.whenPressed(new PinchCommand());
+		circle.whenPressed(new OpenClawCommand());
 	}
 	
 	//// CREATING BUTTONS

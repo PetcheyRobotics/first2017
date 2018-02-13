@@ -24,9 +24,9 @@ public class RobotMap {
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
 
-	public static final int frontLeft=0;
-	public static final int backLeft=1;
-	public static final int frontRight=2;
-	public static final int backRight=3;
-	
+	public static final int frontLeft=2;
+	public static final int backLeft=3;
+	public static final int frontRight=0;
+	public static final int backRight=1;
+	//if it doesnt work, switch the left values back to front and the right values back to front
 }
