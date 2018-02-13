@@ -7,16 +7,50 @@
 
 package org.usfirst.frc.team5781.robot;
 
+import org.usfirst.frc.team5781.robot.commands.OpenClawCommand;
+import org.usfirst.frc.team5781.robot.commands.PinchCommand;
+import org.usfirst.frc.team5781.robot.commands.PusherPushCommand;
+import org.usfirst.frc.team5781.robot.commands.PusherRetractCommand;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */ public class OI {
+	 
+	 public static final int X_AXIS= 0;
+	 public static final int Y_AXIS= 1;
+	 public static final int Z_TWIST_AXIS= 5;
+	 public static final int THROTTLE_AXIS= 2;
+	 
 	public Joystick Driver = new Joystick(0);
+	Button trigger = new JoystickButton(Driver, 1), //Trigger
+			l1 = new JoystickButton(Driver, 2), //L1
+			square = new JoystickButton(Driver, 5), //Square
+			circle = new JoystickButton(Driver, 7), //O
+			
+			button3 = new JoystickButton(Driver, 3), //R3
+			button4 = new JoystickButton(Driver, 4), //L3
+			button6 = new JoystickButton(Driver, 6), //X
+			button8 = new JoystickButton(Driver, 8); //Triangle
+	
+			
 	
 	
 	public OI() {
+		Driver.setThrottleChannel(THROTTLE_AXIS);
+		Driver.setZChannel(Z_TWIST_AXIS);
+		Driver.setXChannel(X_AXIS);
+		Driver.setYChannel(Y_AXIS);
+		
+		trigger.whenPressed(new PinchCommand());
+		l1.whenPressed(new OpenClawCommand());
+		
+		square.whenPressed(new PusherPushCommand());
+		circle.whenPressed(new PusherRetractCommand());
 	}
 	
 	//// CREATING BUTTONS

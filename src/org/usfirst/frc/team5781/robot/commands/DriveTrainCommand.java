@@ -8,6 +8,8 @@
 package org.usfirst.frc.team5781.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+
+import org.usfirst.frc.team5781.robot.OI;
 import org.usfirst.frc.team5781.robot.Robot;
 
 /**
@@ -28,7 +30,7 @@ public class DriveTrainCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.DriveTrainSub.drive(Robot.oi.Driver.getY(), Robot.oi.Driver.getRawAxis(5));
+		Robot.DriveTrainSub.drive(Robot.oi.Driver.getY(), Robot.oi.Driver.getZ());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

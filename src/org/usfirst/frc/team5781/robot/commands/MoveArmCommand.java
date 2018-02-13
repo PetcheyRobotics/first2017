@@ -2,7 +2,7 @@ package org.usfirst.frc.team5781.robot.commands;
 
 import org.usfirst.frc.team5781.robot.Robot;
 
-import edu.wpi.first.wpilibj.DigitalInput;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class MoveArmCommand extends Command {
