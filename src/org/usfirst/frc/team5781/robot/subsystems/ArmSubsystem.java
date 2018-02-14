@@ -19,12 +19,13 @@ public class ArmSubsystem extends Subsystem {
 	 DigitalInput m_lowLimit = new DigitalInput(6);
 	
 	public void move(double x) {
-		if (!isTop() && !isBot())
-		{
+		//if ((x>0 && !isTop()) ||
+		//	(x<0 && !isBot()) )
+		//{
 			mController.set(x);
-		}else {
-			stop();
-		}
+		//}else {
+		//	stop();
+		//}
 			
 			
 	}
