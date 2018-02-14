@@ -34,8 +34,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 			
 			button3 = new JoystickButton(Driver, 3), //R3
 			L3 = new JoystickButton(Driver, 4), //L3
-			button6 = new JoystickButton(Driver, 6), //X
-			button8 = new JoystickButton(Driver, 8); //Triangle
+			button6 = new JoystickButton(Driver, 6);//X
+	public Button Triangle = new JoystickButton(Driver, 8); //Triangle
 	
 			
 	

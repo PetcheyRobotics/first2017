@@ -13,10 +13,12 @@ public class PusherPushCommand extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.PushSub);
+    	requires(Robot.ClawSub);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.ClawSub.openClaw();
     }
 
     // Called repeatedly when this Command is scheduled to run

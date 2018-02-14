@@ -37,7 +37,7 @@ public class DriveTrainSubsystem extends Subsystem {
 	public void drive(double x, double z)
 	{
 		System.out.print("drive called");
-		m_drive.arcadeDrive( x, z, true);
+		m_drive.arcadeDrive( x, 0.65*z, true);
 	
 	}
 	// Put methods for controlling this subsystem

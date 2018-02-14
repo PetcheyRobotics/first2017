@@ -19,6 +19,9 @@ public class ArmSubsystem extends Subsystem {
 	 DigitalInput m_lowLimit = new DigitalInput(8);
 	
 	public void move(double x) {
+		System.out.println("top = " + isTop());
+		System.out.println("bot = " + isBot());
+		System.out.println("x = " + x);
 		if ((x>0 && !isTop()) ||
 			(x<0 && !isBot()) )
 		{
@@ -39,15 +42,8 @@ public class ArmSubsystem extends Subsystem {
 		return m_lowLimit.get();
 	}
 	
-	public void MoveDownLittle() {
-		mController.setSpeed(SPEED);
-	}
-	
-	public void MoveUpLittle() {
-		mController.setSpeed(-SPEED);
-	}
 	public void stop() {
-		mController.stopMotor();
+		mController.set(0);
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

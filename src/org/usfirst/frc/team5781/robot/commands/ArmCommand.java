@@ -19,7 +19,10 @@ public class ArmCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.ArmSub.move(Robot.oi.Driver.getThrottle());
+    	if(Robot.oi.Triangle.get())
+    		Robot.ArmSub.move(Robot.oi.Driver.getThrottle());
+    	else
+    		Robot.ArmSub.move(0.65*Robot.oi.Driver.getThrottle());
     }
 
     // Make this return true when this Command no longer needs to run execute()
