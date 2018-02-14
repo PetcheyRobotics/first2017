@@ -10,10 +10,15 @@ package org.usfirst.frc.team5781.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team5781.robot.automation.PositionOne;
+import org.usfirst.frc.team5781.robot.automation.PositionThree;
+import org.usfirst.frc.team5781.robot.automation.PositionTwo;
+import org.usfirst.frc.team5781.robot.automation.StartUp;
 import org.usfirst.frc.team5781.robot.subsystems.ArmSubsystem;
 import org.usfirst.frc.team5781.robot.subsystems.ClawSubsystem;
 import org.usfirst.frc.team5781.robot.subsystems.DriveTrainSubsystem;
@@ -27,7 +32,6 @@ import org.usfirst.frc.team5781.robot.subsystems.PusherSubsystem;
  * creating this project, you must also update the build.properties file in the
  * project.
  */
-
 
 public class Robot extends IterativeRobot {
 	public static final DriveTrainSubsystem DriveTrainSub
@@ -43,8 +47,8 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
-
+	//SendableChooser<Command> m_chooser = new SendableChooser<>();
+	SendableChooser<Command> autoChooser;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -52,8 +56,16 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		
+		autoChooser = new SendableChooser<Command>();
+		autoChooser.addDefault("Default Position1", new PositionOne());
+		autoChooser.addObject("Postion2", new PositionTwo());
+		autoChooser.addObject("Position3", new PositionThree());
+		SmartDashboard.putData("Autonomous mode chooser", autoChooser);
+		
+		//m_autonomousCommand = new StartUp();
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", m_chooser);
+		//SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
 	/**
@@ -85,8 +97,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
-
+		m_autonomousCommand = (Command) autoChooser.getSelected();
+		m_autonomousCommand.start();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -95,9 +107,9 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.start();
-		}
+		//if (m_autonomousCommand != null) {
+			//m_autonomousCommand.start();
+		//}
 	}
 
 	/**

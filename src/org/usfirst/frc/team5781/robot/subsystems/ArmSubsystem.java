@@ -15,17 +15,17 @@ public class ArmSubsystem extends Subsystem {
 	Talon mController = new Talon(4);
 	final static double SPEED = 0.5;
 	
-	 DigitalInput m_highLimit = new DigitalInput(5);
-	 DigitalInput m_lowLimit = new DigitalInput(6);
+	 DigitalInput m_highLimit = new DigitalInput(9);
+	 DigitalInput m_lowLimit = new DigitalInput(8);
 	
 	public void move(double x) {
-		//if ((x>0 && !isTop()) ||
-		//	(x<0 && !isBot()) )
-		//{
+		if ((x>0 && !isTop()) ||
+			(x<0 && !isBot()) )
+		{
 			mController.set(x);
-		//}else {
-		//	stop();
-		//}
+		}else {
+		  stop();
+		}
 			
 			
 	}
