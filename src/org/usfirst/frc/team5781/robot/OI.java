@@ -28,12 +28,12 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 	 
 	public Joystick Driver = new Joystick(0);
 	Button trigger = new JoystickButton(Driver, 1), //Trigger
-			l1 = new JoystickButton(Driver, 2), //L1
+			L1 = new JoystickButton(Driver, 2), //L1
 			square = new JoystickButton(Driver, 5), //Square
 			circle = new JoystickButton(Driver, 7), //O
 			
 			button3 = new JoystickButton(Driver, 3), //R3
-			button4 = new JoystickButton(Driver, 4), //L3
+			L3 = new JoystickButton(Driver, 4), //L3
 			button6 = new JoystickButton(Driver, 6), //X
 			button8 = new JoystickButton(Driver, 8); //Triangle
 	
@@ -49,8 +49,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 		trigger.whenPressed(new PusherPushCommand());
 		trigger.whenReleased(new PusherRetractCommand());
 		
-		square.whenPressed(new PinchCommand());
-		circle.whenPressed(new OpenClawCommand());
+		L1.whenPressed(new PinchCommand());
+		L3.whenPressed(new OpenClawCommand());
 	}
 	
 	//// CREATING BUTTONS
