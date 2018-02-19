@@ -4,19 +4,34 @@ import org.usfirst.frc.team5781.robot.commands.DriveStraight;
 import org.usfirst.frc.team5781.robot.commands.MoveArmCommand;
 import org.usfirst.frc.team5781.robot.commands.OpenClawCommand;
 import org.usfirst.frc.team5781.robot.commands.PinchCommand;
+import org.usfirst.frc.team5781.robot.commands.TurnXDegreesCommand;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
 public class PositionTwo extends CommandGroup {
-	private long mDuration = 1000;
 
     public PositionTwo() {
+    	boolean turningLeft = true;
+    	String gameData = DriverStation.getInstance().getGameSpecificMessage();
+    	if(gameData.length() > 0) {
+    		if(gameData.charAt(0) == 'R') {
+    			turningLeft=false;
+    		}
+    	}
+    	
+    		
     	addSequential(new PinchCommand());
-    	addParallel(new MoveArmCommand(mDuration, 1)); 
-    	addSequential(new DriveStraight(1, mDuration));
+    	addParallel(new MoveArmCommand(1000, 0.65));     	
+    	addParallel(new DriveStraight(0.6, 500));
+    	
+    	addSequential(new TurnXDegreesCommand(turningLeft?-45:45));   	
+    	addSequential(new DriveStraight(0.6, 2000));
+    	addSequential(new TurnXDegreesCommand(turningLeft?-45:45));     	
+    	addSequential(new DriveStraight(0.6, 2000)); 
     	addSequential(new OpenClawCommand());
     	
         // Add Commands here:

@@ -6,6 +6,7 @@ import org.usfirst.frc.team5781.robot.commands.OpenClawCommand;
 import org.usfirst.frc.team5781.robot.commands.PinchCommand;
 import org.usfirst.frc.team5781.robot.commands.TurnXDegreesCommand;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -13,16 +14,22 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class PositionOne extends CommandGroup {
 	
-	private long mDuration = 1000;
 
     public PositionOne() {
 
     	addSequential(new PinchCommand());
-    	addParallel(new MoveArmCommand(mDuration, 1)); 
-    	addSequential(new DriveStraight(1, mDuration));
-    	addSequential(new TurnXDegreesCommand(90));
-    	addSequential(new DriveStraight(1, mDuration));
-    	addSequential(new OpenClawCommand());
+    	addParallel(new MoveArmCommand(1000, 0.65)); 
+    	addSequential(new DriveStraight(0.6, 4000));
+    	
+    	String gameData = DriverStation.getInstance().getGameSpecificMessage();
+    	if(gameData.length() > 0) {
+    		if(gameData.charAt(0) == 'L') {
+    	    	addSequential(new TurnXDegreesCommand(90));
+    	    	addSequential(new DriveStraight(0.6, 1000));
+    	    	addSequential(new OpenClawCommand());
+    			
+    		}
+    	}
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());
