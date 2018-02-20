@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class MoveArmCommand extends Command {
 	long m_time;
 	long m_endtime;
-	private final double mAmount;
+	private double mAmount;
 	
 	public MoveArmCommand(long milliseconds, double amount) {
 		requires(Robot.ArmSub);
@@ -23,6 +23,7 @@ public class MoveArmCommand extends Command {
 	
  
 	protected void execute() {
+		System.out.println("m_amount="+mAmount);
 		
 		Robot.ArmSub.move(mAmount);
 	}

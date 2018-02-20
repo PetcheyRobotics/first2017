@@ -36,7 +36,7 @@ public class DriveTrainSubsystem extends Subsystem {
 	
 	public void drive(double x, double z)
 	{
-		System.out.print("drive called");
+		System.out.print("drive called "+x+" "+z);
 		m_drive.arcadeDrive( x, 0.65*z, true);
 	
 	}

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5781.robot.automation;
 
+import org.usfirst.frc.team5781.robot.Robot;
 import org.usfirst.frc.team5781.robot.commands.DriveStraight;
 import org.usfirst.frc.team5781.robot.commands.MoveArmCommand;
 import org.usfirst.frc.team5781.robot.commands.OpenClawCommand;
@@ -16,9 +17,12 @@ public class PositionOne extends CommandGroup {
 	
 
     public PositionOne() {
-
+    	requires(Robot.ArmSub);
+    	requires(Robot.DriveTrainSub);
+    	requires(Robot.ClawSub);
+    	System.out.println("Running position one");
     	addSequential(new PinchCommand());
-    	addParallel(new MoveArmCommand(1000, 0.65)); 
+    	addSequential(new MoveArmCommand(1000, 0.65)); 
     	addSequential(new DriveStraight(0.6, 4000));
     	
     	String gameData = DriverStation.getInstance().getGameSpecificMessage();
