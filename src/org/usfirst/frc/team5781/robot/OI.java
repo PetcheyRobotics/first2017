@@ -11,6 +11,7 @@ import org.usfirst.frc.team5781.robot.commands.OpenClawCommand;
 import org.usfirst.frc.team5781.robot.commands.PinchCommand;
 import org.usfirst.frc.team5781.robot.commands.PusherPushCommand;
 import org.usfirst.frc.team5781.robot.commands.PusherRetractCommand;
+import org.usfirst.frc.team5781.robot.commands.WinchCommand;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -51,6 +52,9 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 		
 		L1.whenPressed(new PinchCommand());
 		L3.whenPressed(new OpenClawCommand());
+		
+		Triangle.whenPressed(new WinchCommand());
+
 	}
 	
 	//// CREATING BUTTONS

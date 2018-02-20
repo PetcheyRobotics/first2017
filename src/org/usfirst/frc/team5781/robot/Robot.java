@@ -24,6 +24,7 @@ import org.usfirst.frc.team5781.robot.subsystems.ClawSubsystem;
 import org.usfirst.frc.team5781.robot.subsystems.DriveTrainSubsystem;
 import org.usfirst.frc.team5781.robot.subsystems.GyroSubsystem;
 import org.usfirst.frc.team5781.robot.subsystems.PusherSubsystem;
+import org.usfirst.frc.team5781.robot.subsystems.WinchSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -44,6 +45,9 @@ public class Robot extends IterativeRobot {
 		= new PusherSubsystem();
 	public static final GyroSubsystem GyroSub
 	 	= new GyroSubsystem();
+	public static final WinchSubsystem WinchSub
+ 		= new WinchSubsystem();
+	
 	public static OI oi;
 
 	Command m_autonomousCommand;
