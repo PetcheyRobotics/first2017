@@ -17,19 +17,17 @@ public class PositionOne extends CommandGroup {
 	
 
     public PositionOne() {
-    	requires(Robot.ArmSub);
-    	requires(Robot.DriveTrainSub);
-    	requires(Robot.ClawSub);
+    	
     	System.out.println("Running position one");
     	addSequential(new PinchCommand());
-    	addSequential(new MoveArmCommand(1000, 0.65)); 
-    	addSequential(new DriveStraight(0.6, 4000));
+    	addParallel(new MoveArmCommand(1000, 0.65)); 
+    	addSequential(new DriveStraight(-0.6, 4000));
     	
     	String gameData = DriverStation.getInstance().getGameSpecificMessage();
     	if(gameData.length() > 0) {
     		if(gameData.charAt(0) == 'L') {
     	    	addSequential(new TurnXDegreesCommand(90));
-    	    	addSequential(new DriveStraight(0.6, 1000));
+    	    	addSequential(new DriveStraight(-0.6, 1000));
     	    	addSequential(new OpenClawCommand());
     			
     		}

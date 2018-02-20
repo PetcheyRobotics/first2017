@@ -17,13 +17,13 @@ public class PositionThree extends CommandGroup {
     public PositionThree() {
     	addSequential(new PinchCommand());
 		addParallel(new MoveArmCommand(1000, 0.65)); 
-		addSequential(new DriveStraight(0.6, 4000));
+		addSequential(new DriveStraight(-0.6, 3000));
 		
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		if(gameData.length() > 0) {
 			if(gameData.charAt(0) == 'R') {
 		    	addSequential(new TurnXDegreesCommand(-90));
-		    	addSequential(new DriveStraight(0.6, 1000));
+		    	addSequential(new DriveStraight(-0.6, 1000));
 		    	addSequential(new OpenClawCommand());
 				
 			}

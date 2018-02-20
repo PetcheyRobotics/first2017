@@ -26,12 +26,12 @@ public class PositionTwo extends CommandGroup {
     		
     	addSequential(new PinchCommand());
     	addParallel(new MoveArmCommand(1000, 0.65));     	
-    	addParallel(new DriveStraight(0.6, 500));
+    	addParallel(new DriveStraight(-0.6, 500));
     	
     	addSequential(new TurnXDegreesCommand(turningLeft?-45:45));   	
-    	addSequential(new DriveStraight(0.6, 2000));
+    	addSequential(new DriveStraight(-0.6, 2000));
     	addSequential(new TurnXDegreesCommand(turningLeft?-45:45));     	
-    	addSequential(new DriveStraight(0.6, 2000)); 
+    	addSequential(new DriveStraight(-0.6, 2000)); 
     	addSequential(new OpenClawCommand());
     	
         // Add Commands here:
