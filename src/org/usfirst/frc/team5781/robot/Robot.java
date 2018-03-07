@@ -10,7 +10,6 @@ package org.usfirst.frc.team5781.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,7 +17,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5781.robot.automation.PositionOne;
 import org.usfirst.frc.team5781.robot.automation.PositionThree;
 import org.usfirst.frc.team5781.robot.automation.PositionTwo;
-import org.usfirst.frc.team5781.robot.automation.StartUp;
 import org.usfirst.frc.team5781.robot.subsystems.ArmSubsystem;
 import org.usfirst.frc.team5781.robot.subsystems.ClawSubsystem;
 import org.usfirst.frc.team5781.robot.subsystems.DriveTrainSubsystem;
@@ -63,7 +61,7 @@ public class Robot extends IterativeRobot {
 		
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("Default Position1", new PositionOne());
-		autoChooser.addObject("Postion2", new PositionTwo());
+		autoChooser.addObject("Position2", new PositionTwo());
 		autoChooser.addObject("Position3", new PositionThree());
 		SmartDashboard.putData("Autonomous mode chooser", autoChooser);
 		

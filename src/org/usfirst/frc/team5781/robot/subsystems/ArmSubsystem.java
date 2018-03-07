@@ -19,9 +19,6 @@ public class ArmSubsystem extends Subsystem {
 	 DigitalInput m_lowLimit = new DigitalInput(8);
 	
 	public void move(double x) {
-		System.out.println("top = " + isTop());
-		System.out.println("bot = " + isBot());
-		System.out.println("x = " + x);
 		if ((x>0 && !isTop()) ||
 			(x<0 && !isBot()) )
 		{

@@ -1,11 +1,11 @@
 package org.usfirst.frc.team5781.robot.automation;
 
-import org.usfirst.frc.team5781.robot.Robot;
+import org.usfirst.frc.team5781.robot.RobotMap;
 import org.usfirst.frc.team5781.robot.commands.DriveStraight;
 import org.usfirst.frc.team5781.robot.commands.MoveArmCommand;
 import org.usfirst.frc.team5781.robot.commands.OpenClawCommand;
 import org.usfirst.frc.team5781.robot.commands.PinchCommand;
-import org.usfirst.frc.team5781.robot.commands.TurnXDegreesCommand;
+import org.usfirst.frc.team5781.robot.commands.Turn;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -20,14 +20,16 @@ public class PositionOne extends CommandGroup {
     	
     	System.out.println("Running position one");
     	addSequential(new PinchCommand());
-    	addParallel(new MoveArmCommand(1000, 0.65)); 
-    	addSequential(new DriveStraight(-0.6, 4000));
+    	addParallel(new MoveArmCommand(RobotMap.OneSecond, RobotMap.drivePower)); 
+    	addSequential(new DriveStraight(-1*RobotMap.drivePower, RobotMap.fourSeconds));
     	
     	String gameData = DriverStation.getInstance().getGameSpecificMessage();
+    	System.out.println("gamedata="+gameData);
     	if(gameData.length() > 0) {
     		if(gameData.charAt(0) == 'L') {
-    	    	addSequential(new TurnXDegreesCommand(90));
-    	    	addSequential(new DriveStraight(-0.6, 1000));
+    			System.out.println("Turning");
+    	    	addSequential(new Turn(-1*RobotMap.turnPower, RobotMap.ninetyDegrees));
+    	    	addSequential(new DriveStraight(-1*RobotMap.turnPower, RobotMap.OneSecond));
     	    	addSequential(new OpenClawCommand());
     			
     		}

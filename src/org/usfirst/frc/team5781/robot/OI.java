@@ -50,8 +50,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 		trigger.whenPressed(new PusherPushCommand());
 		trigger.whenReleased(new PusherRetractCommand());
 		
-		L1.whenPressed(new PinchCommand());
-		L3.whenPressed(new OpenClawCommand());
+		square.whenPressed(new PinchCommand());
+		circle.whenPressed(new OpenClawCommand());
 		
 		Triangle.whenPressed(new WinchCommand());
 

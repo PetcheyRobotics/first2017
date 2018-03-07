@@ -1,11 +1,11 @@
 package org.usfirst.frc.team5781.robot.automation;
 
+import org.usfirst.frc.team5781.robot.RobotMap;
 import org.usfirst.frc.team5781.robot.commands.DriveStraight;
 import org.usfirst.frc.team5781.robot.commands.MoveArmCommand;
 import org.usfirst.frc.team5781.robot.commands.OpenClawCommand;
 import org.usfirst.frc.team5781.robot.commands.PinchCommand;
-import org.usfirst.frc.team5781.robot.commands.TurnXDegreesCommand;
-
+import org.usfirst.frc.team5781.robot.commands.Turn;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -22,7 +22,7 @@ public class PositionThree extends CommandGroup {
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		if(gameData.length() > 0) {
 			if(gameData.charAt(0) == 'R') {
-		    	addSequential(new TurnXDegreesCommand(-90));
+		    	addSequential(new Turn(0.6, RobotMap.ninetyDegrees));
 		    	addSequential(new DriveStraight(-0.6, 1000));
 		    	addSequential(new OpenClawCommand());
 				

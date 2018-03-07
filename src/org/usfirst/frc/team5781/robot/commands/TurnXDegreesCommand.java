@@ -17,6 +17,7 @@ public class TurnXDegreesCommand extends Command {
 		}
 
 	protected void execute() {
+		System.out.println("current angle="+Robot.GyroSub.getGyro().getAngle());
 		Robot.DriveTrainSub.drive(0, (m_turnAngle>0)?0.5:-0.5);
 	}
 
